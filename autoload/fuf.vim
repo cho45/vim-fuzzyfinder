@@ -710,7 +710,15 @@ function s:activateFufBuffer()
   "         if 'autochdir' was set on.
   lcd .
   let cwd = getcwd()
-  call l9#tempbuffer#openScratch(s:FUF_BUF_NAME, 'fuf', [], 1, 0, 1, {})
+
+  if g:fuf_openat == 'bottom'
+      " open at bottom
+      call l9#tempbuffer#openScratch(s:FUF_BUF_NAME, 'fuf', [], 0, 0, 1, {})
+  else
+      " open at top
+      call l9#tempbuffer#openScratch(s:FUF_BUF_NAME, 'fuf', [], 1, 0, 1, {})
+  endif
+
   resize 1 " for issue #21 
   " lcd ... : countermeasure against auto-cd script
   lcd `=cwd`
