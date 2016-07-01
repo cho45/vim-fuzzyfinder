@@ -392,6 +392,7 @@ function fuf#launch(modeName, initialPattern, partialMatching)
         \   [ '<BS>'                 , 'onBs()'                            ],
         \   [ '<C-h>'                , 'onBs()'                            ],
         \   [ '<C-w>'                , 'onDeleteWord()'                    ],
+        \   [ '<C-c>'                , 'onCloseFuf()'                      ],
         \   [ g:fuf_keyPreview       , 'onPreviewBase(1)'                  ],
         \   [ g:fuf_keyNextMode      , 'onSwitchMode(+1)'                  ],
         \   [ g:fuf_keyPrevMode      , 'onSwitchMode(-1)'                  ],
@@ -935,6 +936,10 @@ function s:handlerBase.onDeleteWord()
   let pattern = self.removePrompt(getline('.')[ : col('.') - 2])
   let numBs = s:getLastBlockLength(pattern, 1)
   call feedkeys((pumvisible() ? "\<C-e>" : "") . repeat("\<BS>", numBs), 'n')
+endfunction
+
+function s:handlerBase.onCloseFuf()
+  call feedkeys("\<Esc>", 'n') " stopinsert behavior is strange...
 endfunction
 
 "
